@@ -7,7 +7,7 @@
   },
   "main": "employeeserver.js",
   "scripts": {
-    "start": "node employeeserver.js",
+    "start": "node employeeserver.js"
   },
   "dependencies": {
     "ejs": "^2.5.6",
