@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <Title>Holiday</Title>
+    <link rel="shortcut icon" href="Bullhorn-Logo.jpg"/>
+    <meta name="viewport" content="width=device-width", initial-scale="1.0"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <style>
+   li{
+    height:40px;
+    margin-top: 5px;
+    margin-left: 300px;
+    width:500px;
+}
+   </style>
+</head>
+<body>
+  <div class="container">
+  <form >
+  <h3>adding Holidays</h3>
+  <div  >
+  <input type="Date"  id="sdate" placeholder="StartDate"/>
+  <input type="textarea" id="holidayname" placeholder='holiday Name'/>
+  <button id="addholiday" type="button" class="btn btn-primary" >add</button>
+  <button id="listofholiday" type="button" class="btn btn-primary">list of holidays</button>
+</div >
+<div id="message">
+  </div>
+  <div >
+   <ul id="ul" align="center" class="list-group ul">
+</ul> 
+  </div>
+<div id="div1">
+<ul id="ul1" align="center" class="list-group ul">
+</ul>
+</div>
+</form>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+            $.get("/holiday",function(data,status){
+                 var holiday=JSON.parse(data);
+                 console.log(holiday);
+               for(var i=0;i<holiday.length;i++)
+               {
+                   var txt="<li align='center' class='list-group-item list-group-item-success'>"+holiday[i].Date+":"+holiday[i].Holidayname+"</li>";
+                   $("#ul").append(txt);
+               }
+             });
+
+          $("#addholiday").click(function()
+             {
+              if($("#sdate").val() == '' || $("#holidayname").val() == '' )
+              {
+                alert("can not add empty values");
+              }
+              else
+              {
+                 $.post("/addholiday",
+                 {
+                    date:$("#sdate").val(),
+                    holidayname:$("#holidayname").val()
+                 },
+                 function(data,status)
+                 {
+                  console.log(data);
+                  $("#message").text(data);
+             location.reload();
+                 });
+               }
+             });
+$("#listofholiday").click(function()
+{
+    $("#ul1").load("/holiday",function(data,status){
+                 var holiday=JSON.parse(data);
+                 console.log(holiday+"new requweseet");
+                 $("#ul1").empty();
+               for(var i=0;i<holiday.length;i++)
+               {
+                console.log("starting the append");
+                   var txt="<li align='center' class='list-group-item list-group-item-success'>"+holiday[i].Date+":"+holiday[i].Holidayname+"</li>";
+                   $("#ul1").append(txt);
+                   console.log("ending");
+               }
+            
+             });
+});
+});
+</script>
+</body>
+<html>
