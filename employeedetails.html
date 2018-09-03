@@ -14,6 +14,13 @@
 
 <div class="container">
   <h2>Employee Details</h2><div class="table-responsive">
+      <input type="number"  id="empid" placeholder="employeeId"/>
+   <input type="textarea" id="empname" placeholder='employeeName'/>
+   <input type="number"  id="phone" placeholder="phone number"/>
+   <input type="email" id="empemail" placeholder='emailAddress'/>
+   <input type="textarea" id="address" placeholder='address'/>
+  <button id="addemployee" type="button" class="btn btn-primary" >add</button>
+  <button id="listofemployee" type="button" class="btn btn-primary">list of employees</button>
   <table id="emp" border="1" class="table table-striped">
     <tr class="table-success">
       <th>employeeid</th>
@@ -41,9 +48,41 @@ $(document).ready(function(){
                    $("#emp").append(txt);
                }
              });
+              $("#addemployee").click(function()
+             {
+              if($("#empid").val() == '' || $("#empname").val() == '' )
+              {
+                alert("can not add empty values in employeeId and employeename");
+              }
+              else
+              {
+                 $.post("/addemployee",
+                 {
+                 employeeid: $("#empid").val(),
+                 employeename:$("#empname").val(),
+                 phone:$("#phone").val(),
+                 Email:$("#empemail").val(),
+                 address:$("#address").val()
+                 },
+                 function(data,status)
+                 {
+                  console.log(data);
+                  $("#message").text(data);
+             location.reload();
+                 });
+               }
+             });
+             $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    console.log(value);
+    $(".table-info").filter(function() {
+      console.log('demo');
+      console.log($(this).text());
+      console.log($(this).text().toLowerCase().indexOf(value));
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
          });
-
 </script>
 </body>
 </html>
-

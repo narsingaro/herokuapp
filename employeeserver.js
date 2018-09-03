@@ -107,6 +107,19 @@ holiday.push(holidaynew);
 res.send("your holyday added successfully");
 console.log('ended');
 });
+app.post('/addemployee',function (req, res)
+{
+var employeenew={
+               employeeid:req.body.employeeid,
+                 employeename: req.body.employeename,
+                 phone:req.body.phone,
+                 Email:req.body.Email,
+                 address:req.body.address
+};
+projects.push(employeenew);
+res.send("your holyday added successfully");
+console.log('ended');
+});
 var server = app.listen(process.env.PORT || 5000, function () {
   var port = server.address().port;
   console.log("Express is working on port " + port);
