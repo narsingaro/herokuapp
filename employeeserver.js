@@ -109,6 +109,7 @@ console.log('ended');
 });
 app.post('/addemployee',function (req, res)
 {
+	console.log("edited");
 var employeenew={
                employeeid:req.body.employeeid,
                  employeename: req.body.employeename,
